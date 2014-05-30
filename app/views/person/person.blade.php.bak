@@ -1,0 +1,210 @@
+@extends('layouts.base')
+@section('main')
+{{-- */ $isEdit = Input::get('edit'); /* --}}
+
+<div class="profile-full-name">
+  <span class="text-semibold">{{ Session::get('loginName') }}</span>'s profile
+</div>
+
+<div class="profile-row">
+<div class="left-col">
+
+<div class="profile-block">
+  <div class="panel profile-photo">
+          <img src="assets/images/person-grey.png" alt="">
+  </div><br>
+  <a href="#"><i class="profile-list-icon fa fa-envelope" style="color: #888"></i> email her</a>
+</div>
+
+<div class="panel panel-transparent">
+    <div class="panel-heading">
+            <span class="panel-title">About me</span>
+    </div>
+    <div class="panel-body">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et <a href="#">dolore magna</a> aliqua.
+    </div>
+</div>
+
+<div class="panel panel-transparent">
+  <div class="panel-heading">
+          <span class="panel-title">Statistics</span>
+  </div>
+  <div class="list-group">
+          <a href="#" class="list-group-item">Joined company on 3/12/02</a>
+          <a href="#" class="list-group-item">Title is Dentist</a>
+  </div>
+</div>
+
+<div class="panel panel-transparent profile-skills">
+  <div class="panel-heading">
+          <span class="panel-title">Skills</span>
+  </div>
+  <div class="panel-body">
+          <span class="label label-primary">I/UX</span>
+          <span class="label label-primary">Web design</span>
+          <span class="label label-primary">Photoshop</span>
+          <span class="label label-primary">HTML</span>
+          <span class="label label-primary">CSS</span>
+  </div>
+</div>
+
+
+</div> <!-- /.left-col -->
+
+<div class="right-col">
+  <hr class="profile-content-hr no-grid-gutter-h">
+  <div class="profile-content">
+      <ul class="nav nav-tabs nav-tabs-simple">
+              <li class="active">
+              <a href="#contact" data-toggle="tab" class="text-bg">Basics</a>
+              </li>
+              <li>
+              <a href="#security" data-toggle="tab" class="text-bg">Security & Access</a>
+              </li>
+      </ul>
+   </div>
+
+<?php
+$colSm = 3;
+$colBg = 8;
+?>
+<style>
+label { margin-top: 6px; }
+@if (!$isEdit)
+.form-group div { margin-top: 7px; }
+@endif
+</style>
+    <div class="panel">
+    <div class="panel-body tab-content">
+
+    <div class="tab-pane fade active in" id="contact">
+
+    @if (!$isEdit)
+    <div class="row">
+    <div class="col-sm-{{ $colSm+$colBg }} text-right">
+    <button class="btn btn-sm btn-labeled btn-warning"><span class="btn-label icon fa fa-pencil"></span>Edit</button>
+    </br><br>
+    </div>
+    </div>
+    @else
+    <form action="/person/update" method="POST">
+    <input type="hidden" name="eid" value="{{ Session::get('eid') }}">
+    @endif
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Name:</label>
+      <div class="col-sm-4">
+{{ HTML::getTextFieldValue('fname', $person->fname, $isEdit) }}
+      </div>
+      <div class="col-sm-4">
+{{ HTML::getTextFieldValue('lname', $person->lname, $isEdit) }}
+      </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Email:</label>
+    <div class="col-sm-{{ $colBg }}">
+{{ HTML::getTextFieldValue('email', $person->email, $isEdit) }}
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Job role:</label>
+    <div class="col-sm-{{ $colBg }}">
+{{ HTML::getTextFieldValue('role', '', $isEdit) }}
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Wage:</label>
+    <div class="col-sm-{{ $colBg }}">
+{{ HTML::getTextFieldValue('payrate', '', $isEdit) }}
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Location:</label>
+    <div class="col-sm-{{ $colBg }}">
+{{ HTML::getTextFieldValue('location', '', $isEdit) }}
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm }} control-label text-right">Income goal:</label>
+    <div class="col-sm-{{ $colBg }}">
+{{ HTML::getTextFieldValue('income_goal', '', $isEdit) }}
+    </div>
+    </div>
+
+
+    @if ($isEdit)
+    <div class="row">
+    <div class="col-sm-{{ $colSm+$colBg }} text-right">
+    <input type="submit" class="btn btn-primary" value="Save">
+    &nbsp;
+    <button class="btn">Cancel</button>
+    </div>
+    </div>
+    </form>
+    @endif
+
+    </div><!-- /.contact -->
+
+    <div class="tab-pane fade" id="security">
+
+    <div class="row">
+    <div class="col-sm-{{ $colSm+$colBg }} text-right">
+    <button class="btn btn-sm btn-labeled btn-warning"><span class="btn-label icon fa fa-pencil"></span>Edit</button>
+    </br><br>
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm+1 }} control-label text-right">Current password:</label>
+    <div class="col-sm-{{ $colBg-1 }}">
+    <input type="text" name="name" class="form-control">
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm+1 }} control-label text-right">New password:</label>
+    <div class="col-sm-{{ $colBg-1 }}">
+    <input type="text" name="name" class="form-control">
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <label class="col-sm-{{ $colSm+1 }} control-label text-right">Confirm password:</label>
+    <div class="col-sm-{{ $colBg-1 }}">
+    <input type="text" name="name" class="form-control">
+    </div>
+    </div>
+
+    </div>
+
+    <div class="tab-pane fade" id="payroll">
+
+    <div class="row">
+    <div class="col-sm-{{ $colSm+$colBg }} text-right">
+    <button class="btn btn-sm btn-labeled btn-warning"><span class="btn-label icon fa fa-pencil"></span>Edit</button>
+    </br><br>
+    </div>
+    </div>
+
+    </div>
+
+    </div><!-- /.panel-body -->
+    </div><!-- /.panel -->
+
+</div> <!-- /.right-col -->
+</div><!-- /.profile-row -->
+
+<script type="text/javascript">
+	init.push(function () {
+          $('.btn').click(function() {
+            document.location.href='/you?edit=1';
+          });
+	});
+	window.PixelAdmin.start(init);
+</script>
+@stop
